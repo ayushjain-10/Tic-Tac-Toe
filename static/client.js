@@ -4,7 +4,7 @@ let socket = io.connect(url);
 var myTurn = true,
   symbol;
 
-function getBoardState() {
+function updateBoardState() {
   var obj = {};
 
   $(".board button").each(function () {
@@ -14,8 +14,8 @@ function getBoardState() {
   return obj;
 }
 
-function isGameOver() {
-  var state = getBoardState(),
+function GameOver() {
+  var state = updateBoardState(),
 
     matches = ["XXX", "OOO"],
 
@@ -72,7 +72,7 @@ socket.on("move.made", function (data) {
 
   myTurn = data.symbol !== symbol;
 
-  if (!isGameOver()) {
+  if (!GameOver()) {
     renderTurnMessage();
 
   } else {
