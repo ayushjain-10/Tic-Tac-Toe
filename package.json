@@ -1,7 +1,7 @@
 {
   "name": "nodejs-socketio-tic-tac-toe",
   "version": "1.0.0",
-  "description": "",
+  "description": "A realtime online multiplayer tic tac toe game.",
   "main": "server/app.js",
   "scripts": {
     "start": "nodemon server/app.js localhost 3000"

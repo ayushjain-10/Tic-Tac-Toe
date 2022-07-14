@@ -6,29 +6,30 @@ const fs = require("fs");
 
 const server = http.Server(app).listen(3000);
 const io = socketIo(server);
-const clients = {};
+const user = {};
+
+var rooms = 0;
 
 app.use(express.static(__dirname + "/../static/"));
 app.use(express.static(__dirname + "/../node_modules/"));
 
 app.get("/", (req, res) => {
-    const stream = fs.createReadStream(__dirname + "/../static/index.html");
-    stream.pipe(res);
+    res.sendFile(__dirname + "/../static/index.html");
 });
 
-const addClient = socket => {
-    console.log("New client connected", socket.id);
-    clients[socket.id] = socket;
+const adduser = socket => {
+    console.log("New user connected", socket.id);
+    user[socket.id] = socket;
 };
-const removeClient = socket => {
-    console.log("Client disconnected", socket.id);
-    delete clients[socket.id];
+const removeuser = socket => {
+    console.log("User disconnected", socket.id);
+    delete user[socket.id];
 };
 
 io.sockets.on("connection", socket => {
     let id = socket.id;
 
-    addClient(socket);
+    adduser(socket);
 
     socket.on("mousemove", data => {
         data.id = id;
@@ -36,17 +37,17 @@ io.sockets.on("connection", socket => {
     });
 
     socket.on("disconnect", () => {
-        removeClient(socket);
-        socket.broadcast.emit("clientdisconnect", id);
+        removeuser(socket);
+        socket.broadcast.emit("userdisconnect", id);
     });
 });
 
-var players = {},
+var player = {},
     unmatched;
 
 function joinGame(socket) {
 
-    players[socket.id] = {
+    player[socket.id] = {
         opponent: unmatched,
 
         symbol: "X",
@@ -55,47 +56,47 @@ function joinGame(socket) {
     };
 
     if (unmatched) {
-        players[socket.id].symbol = "O";
-        players[unmatched].opponent = socket.id;
+        player[socket.id].symbol = "O";
+        player[unmatched].opponent = socket.id;
         unmatched = null;
     } else {
         unmatched = socket.id;
     }
 }
 
-function getOpponent(socket) {
-    if (!players[socket.id].opponent) {
+function Opponent(socket) {
+    if (!player[socket.id].opponent) {
         return;
     }
 
-    return players[players[socket.id].opponent].socket;
+    return player[player[socket.id].opponent].socket;
 }
 
 io.on("connection", function (socket) {
     joinGame(socket);
 
-    if (getOpponent(socket)) {
+    if (Opponent(socket)) {
         socket.emit("game.begin", {
-            symbol: players[socket.id].symbol
+            symbol: player[socket.id].symbol
         });
 
-        getOpponent(socket).emit("game.begin", {
-            symbol: players[getOpponent(socket).id].symbol
+        Opponent(socket).emit("game.begin", {
+            symbol: player[Opponent(socket).id].symbol
         });
     }
 
     socket.on("make.move", function (data) {
-        if (!getOpponent(socket)) {
+        if (!Opponent(socket)) {
             return;
         }
 
         socket.emit("move.made", data);
-        getOpponent(socket).emit("move.made", data);
+        Opponent(socket).emit("move.made", data);
     });
 
     socket.on("disconnect", function () {
-        if (getOpponent(socket)) {
-            getOpponent(socket).emit("opponent.left");
+        if (Opponent(socket)) {
+            Opponent(socket).emit("opponent.left");
         }
     });
 });
