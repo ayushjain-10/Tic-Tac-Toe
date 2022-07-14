@@ -7,7 +7,7 @@ var myTurn = true,
 function getBoardState() {
   var obj = {};
 
-  $(".board button").each(function() {
+  $(".board button").each(function () {
     obj[$(this).attr("id")] = $(this).text() || "";
   });
 
@@ -66,7 +66,7 @@ function makeMove(e) {
   });
 }
 
-socket.on("move.made", function(data) {
+socket.on("move.made", function (data) {
 
   $("#" + data.position).text(data.symbol);
 
@@ -88,7 +88,7 @@ socket.on("move.made", function(data) {
   }
 });
 
-socket.on("game.begin", function(data) {
+socket.on("game.begin", function (data) {
 
   symbol = data.symbol;
 
@@ -96,12 +96,12 @@ socket.on("game.begin", function(data) {
   renderTurnMessage();
 });
 
-socket.on("opponent.left", function() {
+socket.on("opponent.left", function () {
   $("#messages").text("Your opponent left the game.");
   $(".board button").attr("disabled", true);
 });
 
-$(function() {
+$(function () {
   $(".board button").attr("disabled", true);
   $(".board> button").on("click", makeMove);
 });

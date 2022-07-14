@@ -1,0 +1,39 @@
+body {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  background: linear-gradient(145deg, pink, blue);
+}
+
+.board {
+  margin: auto;
+  width: 350px;
+}
+
+.board button {
+  height: 100px;
+  width: 100px;
+  margin: 0px;
+  padding: 0px;
+  float: left;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  font-size: 3em;
+  font-size: 40px;
+  inline-size: 100px;
+  block-size: 100px;
+  border-radius: 12px;
+  background-color: rgb(163, 162, 197);
+  color: brown;
+}
+
+h1 {
+  font-weight: bold;
+  color: brown;
+  font-size: 40px;
+  text-align: center;
+}
+
+.board button:hover {
+  background-color: rgb(37, 166, 218);
+}
