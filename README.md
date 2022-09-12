@@ -16,3 +16,11 @@ To run this game:
 3. Run `nodemon`
 
 4. Open up two web pages on http://localhost:3000/ and start playing
+
+## Dockerfile
+
+1. Build the Image - 
+`docker build -t node-image .`
+
+2. Run the Container -
+`docker run -p 49160:8080 --rm --name flask-container flask-image`
