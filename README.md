@@ -15,7 +15,7 @@ To run this game:
 
 3. Run `nodemon`
 
-4. Open up two web pages on http://localhost:3000/ and start playing
+4. Open up two web pages on http://localhost:8080/ and start playing
 
 ## Dockerfile
 

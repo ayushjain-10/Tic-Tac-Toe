@@ -4,17 +4,17 @@ const http = require("http"),
     socketIo = require("socket.io");
 const fs = require("fs");
 
-const server = http.Server(app).listen(3000);
+const server = http.Server(app).listen(8080);
 const io = socketIo(server);
 const user = {};
 
 var rooms = 0;
 
-app.use(express.static(__dirname + "/../static/"));
-app.use(express.static(__dirname + "/../node_modules/"));
+app.use(express.static(__dirname + "/static"));
+app.use(express.static(__dirname + "/node_modules"));
 
 app.get("/", (req, res) => {
-    res.sendFile(__dirname + "/../static/index.html");
+    res.sendFile(__dirname + "/static/index.html");
 });
 
 const adduser = socket => {
