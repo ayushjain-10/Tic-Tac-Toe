@@ -2,9 +2,9 @@
   "name": "nodejs-socketio-tic-tac-toe",
   "version": "1.0.0",
   "description": "A realtime online multiplayer tic tac toe game.",
-  "main": "server/app.js",
+  "main": "app.js",
   "scripts": {
-    "start": "nodemon server/app.js localhost 3000"
+    "start": "nodemon app.js localhost 8080"
   },
   "dependencies": {
     "express": "4.16.4",

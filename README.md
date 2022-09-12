@@ -15,4 +15,14 @@ To run this game:
 
 3. Run `nodemon`
 
-4. Open up two web pages on http://localhost:3000/ and start playing
+4. Open up two web pages on http://localhost:8080/ and start playing
+
+## Dockerfile
+
+1. Build the Image - 
+`docker build -t node-image .`
+
+2. Run the Container -
+`docker run -p 8080:8080 --d --rm --name node-container node-image`
+
+3. Go to localhost:8080
