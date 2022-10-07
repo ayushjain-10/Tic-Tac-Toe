@@ -23,6 +23,6 @@ To run this game:
 `docker build -t node-image .`
 
 2. Run the Container -
-`docker run -p 8080:8080 --d --rm --name node-container node-image`
+`docker run -p 8080:8080 --rm --name node-container node-image`
 
 3. Go to localhost:8080
